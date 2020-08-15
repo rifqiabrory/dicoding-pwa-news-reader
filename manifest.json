@@ -1,0 +1,15 @@
+{
+    "_comment": "boleh name (max. 45 character) atau sort_name (max. 12 character), description (max. 132 character), display(fullscreen, standalone, minimal-ui, browser), icons (72x72, 96x96, 128x128, 144x144, 192x192, 256x256, 384x384, dan 512x512)",
+    "name": "My First PWA",
+    "short_name": "My PWA",
+    "description": "Aplikasi PWA pertama saya",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#00897B",
+    "theme_color": "#00897B",
+    "icons": [{
+        "src": "./img/icon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    }]
+}
