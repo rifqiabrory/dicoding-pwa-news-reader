@@ -56,7 +56,10 @@
                     console.error("Pengguna menutup kotak dialog permintaan ijin.");
                     return;
                 }
-                console.log("Fitur notifikasi diijinkan.");
+                navigator.serviceWorker.getRegistration().then(function (reg) {
+                    console.log("Fitur notifikasi diijinkan.");
+                    reg.showNotification('Notification di izinkan.');
+                });
             })
         }
 
@@ -85,26 +88,9 @@
                 ]
             }
 
-            const title2 = 'Notifikasi Sederhana';
-            const options2 = {
-                'body': 'Ini adalah konten notifikasi. \nBisa menggunakan baris baru.',
-                'tag': 'message-group-2',
-                requireInteraction: true,
-                renotify: true,
-                'actions': [{
-                        'action': 'yes-action',
-                        'title': 'Ya',
-                    },
-                    {
-                        'action': 'no-action',
-                        'title': 'Tidak',
-                    }
-                ]
-            }
             if (Notification.permission === 'granted') {
                 navigator.serviceWorker.ready.then(function (registration) {
                     registration.showNotification(title, options);
-                    registration.showNotification(title2, options2);
                 });
             } else {
                 console.error('FItur notifikasi tidak diijinkan.');
