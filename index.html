@@ -46,10 +46,71 @@
             console.log("ServiceWorker belum didukung browser ini.");
         }
 
+        // CHECKING NOTIFICATION API
+        if ("Notification" in navigator) {
+            Notification.requestPermission().then(response => {
+                if (response == "denied") {
+                    console.log("Fitur notifikasi tidak di izinkan.");
+                    return;
+                } else if (response == "default") {
+                    console.error("Pengguna menutup kotak dialog permintaan ijin.");
+                    return;
+                }
+                console.log("Fitur notifikasi diijinkan.");
+            })
+        }
+
         // REQUEST API UNTUK PERTAMA KALI
         document.addEventListener("DOMContentLoaded", function () {
             getArticles();
         });
+
+        function showNotifikasiSederhana() {
+            const title = 'Notifikasi Sederhana';
+            const options = {
+                'body': 'Ini adalah konten notifikasi. \nBisa menggunakan baris baru.',
+                'tag': 'message-group-1', // for grouping message
+                requireInteraction: true, // need interaction user for action "yes" or "no"
+                renotify: true, // renotify some notifications
+                // silent: true, // silent sound
+                // 'image': '/img/pexels-photo-270366.jpg', //for image rasio 2:1 
+                'actions': [{
+                        'action': 'yes-action',
+                        'title': 'Ya',
+                    },
+                    {
+                        'action': 'no-action',
+                        'title': 'Tidak',
+                    }
+                ]
+            }
+
+            const title2 = 'Notifikasi Sederhana';
+            const options2 = {
+                'body': 'Ini adalah konten notifikasi. \nBisa menggunakan baris baru.',
+                'tag': 'message-group-2',
+                requireInteraction: true,
+                renotify: true,
+                'actions': [{
+                        'action': 'yes-action',
+                        'title': 'Ya',
+                    },
+                    {
+                        'action': 'no-action',
+                        'title': 'Tidak',
+                    }
+                ]
+            }
+            if (Notification.permission === 'granted') {
+                navigator.serviceWorker.ready.then(function (registration) {
+                    registration.showNotification(title, options);
+                    registration.showNotification(title2, options2);
+                });
+            } else {
+                console.error('FItur notifikasi tidak diijinkan.');
+                alert("Notifikasi tidak di izinkan.");
+            }
+        }
     </script>
 </body>
 
